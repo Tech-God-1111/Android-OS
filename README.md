@@ -31,7 +31,7 @@ cd Android-OS
 bash install.sh
 ```
 
-The installer checks that it is running in Termux, installs proot-distro, installs Debian, and adds the basic tools. It is safe to run again.
+The installer checks that it is running in Termux, installs proot-distro, installs Debian, and adds the basic tools. It is safe to run again. It does not replace Android or modify boot partitions.
 
 ## Optional XFCE desktop
 
@@ -54,6 +54,18 @@ Stop the desktop:
 ```sh
 bash stop-desktop.sh
 ```
+
+## Remove Android-OS Linux (reversible)
+
+To remove the Debian environment and reclaim its storage, run this from the Android-OS directory in Termux:
+
+```sh
+bash uninstall.sh
+```
+
+The script requires you to type `REMOVE-DEBIAN` before it proceeds. It stops the optional VNC session and removes only the Debian container using `proot-distro remove debian`. This permanently deletes files and packages stored inside that Debian container, so copy out anything you want to keep first. It leaves Android, Termux, the Android-OS project folder, and other files outside Debian untouched. You can install Debian again later by running `bash install.sh`.
+
+To simply stop the graphical desktop without uninstalling Linux, use `bash stop-desktop.sh`.
 
 ## Useful commands
 
@@ -91,4 +103,4 @@ getprop ro.product.cpu.abi
 
 ## Project status
 
-**v0.1.0 — Linux bootstrap prototype.** Debian CLI installation and optional XFCE/VNC setup scripts are provided. Device-specific testing on the Galaxy On Max is still required.
+**v0.1.1 — reversible Linux bootstrap prototype.** Debian CLI installation, optional XFCE/VNC setup, and an explicit uninstall script are provided. Device-specific testing on the Galaxy On Max is still required.
